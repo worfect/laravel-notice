@@ -1,0 +1,44 @@
+{
+    "name": "worfect/laravel-notice",
+    "description": "Creature and display notifications",
+    "type": "library",
+    "keywords": ["laravel, notice"],
+
+    "require": {
+        "php": "^7.3|^8.0",
+        "laravel/framework": "^7.0|^8.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "~1.4.0",
+        "phpunit/phpunit": "~9.5.0",
+        "codeception/codeception": "~4.1.0",
+        "codeception/module-phpbrowser": "^1.0.0",
+        "codeception/module-asserts": "^1.0.0",
+        "codeception/module-webdriver": "^1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Worfect\\Notice\\": "src/"
+        },
+        "files": [
+            "src/functions.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Worfect\\Notice\\NoticeServiceProvider"
+            ],
+            "aliases": {
+                "Notice": "Worfect\\Notice\\Notice"
+            }
+        }
+    }
+}

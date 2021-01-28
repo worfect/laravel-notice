@@ -1,0 +1,12 @@
+actor: AcceptanceTester
+modules:
+  enabled:
+    - \Helper\Acceptance
+    - WebDriver:
+        url: '0.0.0.0'
+        host: '172.26.0.6'
+        port: '5555'
+        browser: chrome
+    - Laravel:
+        part: ORM
+        cleanup: false

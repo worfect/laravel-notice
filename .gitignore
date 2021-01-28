@@ -1,0 +1,8 @@
+composer.lock
+composer.phar
+.idea
+
+/vendor
+/tests/_data
+/tests/_output
+/tests/_support
