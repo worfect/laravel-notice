@@ -3,15 +3,8 @@
 
 namespace Worfect\Notice;
 
-class HtmlStorage implements Storage
+class HtmlStorage extends BaseStorage
 {
-
-    /**
-     * The message object store.
-     *
-     * @var array
-     */
-    public $store = [];
 
     /**
      * Create messages view.
@@ -22,16 +15,6 @@ class HtmlStorage implements Storage
     protected function getView(array $store): string
     {
         return view('notice::html', ['messages' => $store])->render();
-    }
-
-    /**
-     * Add message object to the store
-     *
-     * @param  $data
-     */
-    public function add($data)
-    {
-       $this->store[] = $data;
     }
 
     /**

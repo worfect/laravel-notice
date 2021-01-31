@@ -3,42 +3,15 @@
 
 namespace Worfect\Notice;
 
-class JsonStorage implements Storage
+class JsonStorage extends BaseStorage
 {
-
-    /**
-     * Staging message object store.
-     *
-     * @var \Illuminate\Support\Collection
-     */
-    public $store;
-
-    /**
-     * Create a new json store instance.
-     *
-     */
-    public function __construct()
-    {
-        $this->store = collect();
-    }
-
-    /**
-     * Add message object to the store
-     *
-     * @param $data
-     */
-    public function add($data)
-    {
-        $this->store->push($data);
-    }
-
     /**
      * Get messages as json string
      *
      * @return string
      */
-    public function get()
+    public function get() :string
     {
-        return ($this->store)->toJson();
+        return json_encode($this->store);
     }
 }

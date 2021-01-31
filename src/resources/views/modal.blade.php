@@ -8,7 +8,11 @@
             </div>
 
             <div class="modal-body">
-                <p>{!! $body !!}</p>
+                <div class="notice-message alert alert-{{ $message['level'] }}"
+                     role="alert"
+                >
+                    {!! $message['message'] !!}
+                </div>
             </div>
 
             <div class="modal-footer">

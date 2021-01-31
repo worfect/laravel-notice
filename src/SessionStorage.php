@@ -2,23 +2,15 @@
 
 namespace Worfect\Notice;
 
-
-
-class SessionStorage implements Storage
+class SessionStorage extends BaseStorage
 {
-    /**
-     * Staging message object store.
-     *
-     * @var \Illuminate\Support\Collection
-     */
-    public $store;
-
     /**
      * Create a new session store instance.
      *
      */
     public function __construct()
     {
+        parent::__construct();
         $this->store = collect();
     }
 
@@ -43,9 +35,8 @@ class SessionStorage implements Storage
         \session()->flash('notice', $this->store);
     }
 
-
     public function get()
     {
-        // TODO: Implement get() method.
+        return true;
     }
 }

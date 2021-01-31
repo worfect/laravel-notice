@@ -9,74 +9,68 @@ use Exception;
 class Notifier
 {
     /**
+     * UI methods for interacting with storage
+     *
+     */
+
+    public function session()
+    {
+        $this->getAllMessages(SessionStorage::getInstance());
+    }
+
+    public function json()
+    {
+       return $this->getAllMessages(JsonStorage::getInstance());
+    }
+
+    public function html()
+    {
+       return $this->getAllMessages(HtmlStorage::getInstance());
+    }
+
+
+    /**
+     * Get all messages from storage.
+     *
+     * @param BaseStorage $storage
+     * @return mixed
+     */
+    protected function getAllMessages(BaseStorage $storage){
+        $this->addMessageInStore($storage);
+        return $this->getAllMessagesFromStore($storage);
+    }
+
+    /**
+     * Add message to storage.
+     *
+     * @param BaseStorage $storage
+     */
+    protected function addMessageInStore(BaseStorage $storage)
+    {
+        if($this->message){
+            $storage->add($this->message);
+        }
+        $this->delActiveMessage();
+    }
+
+    /**
+     * Add message to storage.
+     *
+     * @param BaseStorage $storage
+     */
+    protected function getAllMessagesFromStore(BaseStorage $storage)
+    {
+        return $storage->get();
+    }
+
+
+
+    /**
      * The active message.
      *
      * @var Message
      */
-    public $message;
-
-    /**
-     * The active message store.
-     *
-     * @var Storage
-     */
-    public $store;
-
-    /**
-     * All added storages
-     *
-     * @var array
-     */
-    public $storages = [];
-
-    /**
-     * Create a new json store instance.
-     *
-     */
-    public function __construct()
-    {
-        $this->storages['session'] = new SessionStorage;
-        $this->storages['json'] = new JsonStorage;
-        $this->storages['html'] = new HtmlStorage;
-    }
-
-    /**
-     * Add message object to the session store
-     *
-     */
-    public function session()
-    {
-        $this->store = $this->selectStore('session');
-        $this->add();
-    }
-
-    /**
-     * Add message object to the json store
-     * Return all messages added to the store as a json string
-     *
-     * @return string
-     */
-    public function json(): string
-    {
-        $this->store = $this->selectStore('json');
-        $this->add();
-        return $this->store->get();
-    }
-
-    /**
-     * Add message object to the html store
-     * Return all messages added to the store as a html
-     *
-     * @return string
-     */
-    public function html(): string
-    {
-        $this->store = $this->selectStore('html');
-        $this->add();
-        return $this->store->get();
-    }
-
-
+    protected $message;
 
     /**
      * Set the message level info.
@@ -177,38 +171,14 @@ class Notifier
         return $this->updateMessage(['important' => true, 'overlay' => false, 'title' => false]);
     }
 
-
-    /**
-     * Add message object to the store
-     *
-     * @return void
-     */
-    protected function add()
-    {
-        if($this->message){
-            $this->store->add($this->message);
-        }
-        $this->clear();
-    }
-
     /**
      * Clear active message.
      *
      * @return void
      */
-    protected function clear()
+    protected function delActiveMessage()
     {
         $this->message = false;
     }
 
-    /**
-     * Select storage.
-     *
-     * @param $name
-     * @return Storage
-     */
-    protected function selectStore(string $name) : Storage
-    {
-        return $this->storages[$name];
-    }
 }

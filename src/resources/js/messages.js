@@ -6,7 +6,6 @@
 //     $(".notice-message").wrapAll("<div class='notice-messages'></div>");
 // }
 
-
 function showMessages(data){
     $('.notice-messages').remove();
     $.each(data, function(k, message){
