@@ -1,10 +1,6 @@
 <?php
 
-
 namespace Worfect\Notice;
-
-
-use phpDocumentor\Reflection\Types\Mixed_;
 
 abstract class BaseStorage implements Storage
 {
@@ -14,6 +10,13 @@ abstract class BaseStorage implements Storage
      * @var array
      */
     public $store = [];
+
+    /**
+     * Generated response.
+     *
+     * @var array
+     */
+    public $result;
 
     /**
      * Contains instances of all created stores.
@@ -57,11 +60,20 @@ abstract class BaseStorage implements Storage
     }
 
     /**
-     * Get data from storage if necessary
+     * Get data from storage
      *
      */
     public function get()
     {
-        //
+        $this->createResponse();
+        return $this->result;
+    }
+
+    /**
+     * Create response
+     */
+    public function createResponse()
+    {
+
     }
 }

@@ -18,12 +18,11 @@ class HtmlStorage extends BaseStorage
     }
 
     /**
-     * Get generated message template
+     * Create response as a HTML string
      *
-     * @return string
      */
-    public function get(): string
+    public function createResponse()
     {
-        return $this->getView($this->store);
+        $this->result = $this->getView($this->store);
     }
 }

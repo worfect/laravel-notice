@@ -6,12 +6,11 @@ namespace Worfect\Notice;
 class JsonStorage extends BaseStorage
 {
     /**
-     * Get messages as json string
+     * Create response as a JSON string
      *
-     * @return string
      */
-    public function get() :string
+    public function createResponse()
     {
-        return json_encode($this->store);
+        $this->result = json_encode($this->store);
     }
 }

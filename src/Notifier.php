@@ -2,8 +2,6 @@
 
 namespace Worfect\Notice;
 
-
-
 use Exception;
 
 class Notifier
@@ -28,6 +26,28 @@ class Notifier
        return $this->getAllMessages(HtmlStorage::getInstance());
     }
 
+    /**
+     * Message an overlay modal.
+     *
+     * @param string $title
+     * @return $this
+     */
+    public function overlay($title = ''): Notifier
+    {
+        return $this->updateMessage(['title' => $title, 'overlay' => true, 'important' => false]);
+    }
+
+    /**
+     * Add an "important" property to the message.
+     *
+     * @return $this
+     */
+    public function important(): Notifier
+    {
+        return $this->updateMessage(['important' => true, 'overlay' => false, 'title' => false]);
+    }
+
+
 
     /**
      * Get all messages from storage.
@@ -35,7 +55,8 @@ class Notifier
      * @param BaseStorage $storage
      * @return mixed
      */
-    protected function getAllMessages(BaseStorage $storage){
+    protected function getAllMessages(BaseStorage $storage)
+    {
         $this->addMessageInStore($storage);
         return $this->getAllMessagesFromStore($storage);
     }
@@ -54,7 +75,7 @@ class Notifier
     }
 
     /**
-     * Add message to storage.
+     * Get message from storage.
      *
      * @param BaseStorage $storage
      */
@@ -148,27 +169,6 @@ class Notifier
         $this->message->update($overrides);
 
         return $this;
-    }
-
-    /**
-     * Message an overlay modal.
-     *
-     * @param string $title
-     * @return $this
-     */
-    public function overlay($title = ''): Notifier
-    {
-        return $this->updateMessage(['title' => $title, 'overlay' => true, 'important' => false]);
-    }
-
-    /**
-     * Add an "important" property to the message.
-     *
-     * @return $this
-     */
-    public function important(): Notifier
-    {
-        return $this->updateMessage(['important' => true, 'overlay' => false, 'title' => false]);
     }
 
     /**

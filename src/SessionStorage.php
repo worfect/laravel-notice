@@ -34,9 +34,4 @@ class SessionStorage extends BaseStorage
     {
         \session()->flash('notice', $this->store);
     }
-
-    public function get()
-    {
-        return true;
-    }
 }
