@@ -2,12 +2,11 @@
 
 namespace Worfect\Notice;
 
-
-
 use Exception;
 
 class Notifier
 {
+
     /**
      * The active message.
      *

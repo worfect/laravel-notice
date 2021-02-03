@@ -4,12 +4,15 @@ namespace Tests\functional;
 
 use Codeception\Example;
 use FunctionalTester;
+use Worfect\Notice\HtmlStorage;
+use Worfect\Notice\JsonStorage;
+use Worfect\Notice\Message;
 use Worfect\Notice\Notice;
 use Worfect\Notice\Notifier;
+use Worfect\Notice\SessionStorage;
 
 class NotifierCest
 {
-
     /**
      *
      * @param FunctionalTester $I
@@ -18,21 +21,21 @@ class NotifierCest
     {
         notice('test');
 
-        $message = \session()->get('notice');
+        $session = \session()->get('notice');
 
-        $I->assertEquals('test', $message['0']['message']);
-        $I->assertEquals('info', $message['0']['level']);
-        $I->assertEquals(false, $message['0']['overlay']);
-        $I->assertEquals(false, $message['0']['title']);
-        $I->assertEquals(false, $message['0']['important']);
+        $I->assertEquals('test', $session['0']['message']);
+        $I->assertEquals('info', $session['0']['level']);
+        $I->assertEquals(false, $session['0']['overlay']);
+        $I->assertEquals(false, $session['0']['title']);
+        $I->assertEquals(false, $session['0']['important']);
     }
 
     /**
      *
-     * @example (message="test2", level="danger")
-     * @example (message="test3", level="warning")
-     * @example (message="test0", level="info")
-     * @example (message="test1", level="success")
+     * @example (message="test0", level="danger")
+     * @example (message="test1", level="warning")
+     * @example (message="test2", level="info")
+     * @example (message="test3", level="success")
      *
      * @param FunctionalTester $I
      * @param Example $example
@@ -41,14 +44,18 @@ class NotifierCest
     {
         notice($example['message'], $example['level']);
 
-        $message = \session()->get('notice');
+        $session = \session()->get('notice');
 
-        $I->assertEquals($example['message'], $message[0]['message']);
-        $I->assertEquals($example['level'], $message[0]['level']);
-        $I->assertEquals(false, $message[0]['overlay']);
-        $I->assertEquals(false, $message[0]['title']);
-        $I->assertEquals(false, $message[0]['important']);
+        $I->assertEquals($example['message'], $session[0]['message']);
+        $I->assertEquals($example['level'], $session[0]['level']);
+        $I->assertEquals(false, $session[0]['overlay']);
+        $I->assertEquals(false, $session[0]['title']);
+        $I->assertEquals(false, $session[0]['important']);
     }
+
+
+
+
 
     /**
      *
@@ -68,6 +75,9 @@ class NotifierCest
         $I->assertInstanceOf(Notifier::class, notice());
     }
 
+
+
+
     /**
      *
      * @param FunctionalTester $I
@@ -86,6 +96,7 @@ class NotifierCest
         $notice->success('success')->overlay();
 
         $I->assertEquals(false, $notice->message['title']);
+
     }
 
     /**
@@ -103,7 +114,6 @@ class NotifierCest
         $I->assertEquals(false, $notice->message['title']);
         $I->assertEquals(true, $notice->message['important']);
     }
-
 
     /**
      *
@@ -125,36 +135,42 @@ class NotifierCest
         $I->assertEquals(true, $notice->message['important']);
     }
 
+
     /**
      *
      * @param FunctionalTester $I
+     * @param Notifier $notice
      */
-    public function severalMessageInStorages(FunctionalTester $I)
+    public function accordanceDataAndReturnTypeDataInStorages(FunctionalTester $I, Notifier $notice)
     {
-        $examples = [
-            ['message'=>"test1", 'level'=>"info"],
-            ['message'=>"test2", 'level'=>"success"]
-        ];
 
-        foreach ($examples as $example){
-            $level = $example['level'];
-            $message =  $example['level'];
+        $notice->success('text0')->session();
+        $notice->danger('text1')->session();
 
-            notice($message, $level);
-            $json = notice()->$level($message)->json();
-            $html =  notice()->$level($message)->html();
-        }
+        $notice->success('text0')->json();
+        $notice->danger('text1')->json();
 
-        $I->assertCount(2, notice()->storages['session']->store);
-        $I->assertCount(2, notice()->storages['json']->store);
-        $I->assertCount(2, notice()->storages['html']->store);
+        $notice->success('text0')->html();
+        $notice->danger('text1')->html();
+
+        $I->assertJson($notice->json());
+        $I->assertIsString($notice->html());
+
+        $I->assertCount(2, $notice->storages['json']->store);
+        $I->assertCount(2, $notice->storages['html']->store);
+        $I->assertCount(2, $notice->storages['session']->store);
+
+        $I->assertEquals($notice->storages['html']->store[0], $notice->storages['json']->store[0]);
+        $I->assertEquals($notice->storages['html']->store[1], $notice->storages['json']->store[1]);
+        $I->assertEquals($notice->storages['json']->store[0], $notice->storages['session']->store[0]);
+        $I->assertEquals($notice->storages['json']->store[1], $notice->storages['session']->store[1]);
     }
 
     /**
      *
      * @param FunctionalTester $I
      */
-    public function ifThereIsNoMessage(FunctionalTester $I)
+    public function ifThereIsNoMessageText(FunctionalTester $I)
     {
         \notice('', 'success');
         $message = \session()->get('notice');

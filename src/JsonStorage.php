@@ -33,11 +33,10 @@ class JsonStorage implements Storage
     }
 
     /**
-     * Get messages as json string
+     * Get messages as json string, if there are any in the store
      *
-     * @return string
      */
-    public function get()
+    public function get(): string
     {
         return ($this->store)->toJson();
     }

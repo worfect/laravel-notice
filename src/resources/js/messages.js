@@ -1,13 +1,15 @@
-// function html(data){
-//     $('.notice-messages').remove();
-//     $('.btn-notice').after(data)
-//     $('#notice-overlay-modal').modal('show')
-//     $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
-//     $(".notice-message").wrapAll("<div class='notice-messages'></div>");
-// }
+
+function showHTML(data){
+    $('.notice-messages').remove();
+    $('.btn-notice').after(data)
+    $('#notice-overlay-modal').modal('show')
+    $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+    $(".notice-message").wrapAll("<div class='notice-messages'></div>");
+}
 
 
-function showMessages(data){
+
+function showJSON(data){
     $('.notice-messages').remove();
     $.each(data, function(k, message){
         if(message.overlay){
@@ -30,7 +32,7 @@ function doModal(message){
     html += '<h4 class="modal-title">'+message.title+'</h4>';
     html += '</div>';
     html += '<div class="modal-body"> ';
-    html += '<div class="alert alert-'+message.level+'"  role="alert">';
+    html += '<div class="alert alert-'+message.level+' alert-important"  role="alert">';
     html +=  message.message;
     html += '</div>';
     html += '</div>';

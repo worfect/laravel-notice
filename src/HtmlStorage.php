@@ -37,7 +37,6 @@ class HtmlStorage implements Storage
     /**
      * Get generated message template
      *
-     * @return string
      */
     public function get(): string
     {
