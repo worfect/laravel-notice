@@ -52,10 +52,10 @@ class Notifier
     /**
      * Get all messages from storage.
      *
-     * @param BaseStorage $storage
+     * @param Storage $storage
      * @return mixed
      */
-    protected function getAllMessages(BaseStorage $storage)
+    protected function getAllMessages(Storage $storage)
     {
         $this->addMessageInStore($storage);
         return $this->getAllMessagesFromStore($storage);
@@ -64,9 +64,9 @@ class Notifier
     /**
      * Add message to storage.
      *
-     * @param BaseStorage $storage
+     * @param Storage $storage
      */
-    protected function addMessageInStore(BaseStorage $storage)
+    protected function addMessageInStore(Storage $storage)
     {
         if($this->message){
             $storage->add($this->message);
@@ -77,9 +77,9 @@ class Notifier
     /**
      * Get message from storage.
      *
-     * @param BaseStorage $storage
+     * @param Storage $storage
      */
-    protected function getAllMessagesFromStore(BaseStorage $storage)
+    protected function getAllMessagesFromStore(Storage $storage)
     {
         return $storage->get();
     }
