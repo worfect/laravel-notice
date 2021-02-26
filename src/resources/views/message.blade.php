@@ -1,4 +1,3 @@
-
 @if ($message['overlay'])
     @include('notice::modal', [
         'title'      => $message['title'],

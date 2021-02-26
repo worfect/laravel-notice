@@ -1,10 +1,10 @@
-// function html(data){
-//     $('.notice-messages').remove();
-//     $('.btn-notice').after(data)
-//     $('#notice-overlay-modal').modal('show')
-//     $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
-//     $(".notice-message").wrapAll("<div class='notice-messages'></div>");
-// }
+function showHtml(data){
+    $('.notice-messages').remove();
+    $('.btn-notice').after(data)
+    $('#notice-overlay-modal').modal('show')
+    $('div.alert').not('.alert-important').delay(3000).fadeOut(350);
+    $(".notice-message").wrapAll("<div class='notice-messages'></div>");
+}
 
 function showMessages(data){
     $('.notice-messages').remove();

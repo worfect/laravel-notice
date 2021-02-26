@@ -9,14 +9,14 @@ abstract class BaseStorage implements Storage
      *
      * @var array
      */
-    public $store = [];
+    protected $store = [];
 
     /**
      * Generated response.
      *
      * @var array
      */
-    public $result;
+    protected $result;
 
     /**
      * Contains instances of all created stores.
@@ -32,13 +32,6 @@ abstract class BaseStorage implements Storage
      */
     protected function __construct() { }
 
-    protected function __clone() { }
-
-    public function __wakeup()
-    {
-        throw new \Exception("Cannot unserialize a singleton.");
-    }
-
     public static function getInstance(): BaseStorage
     {
         $cls = static::class;
@@ -47,7 +40,6 @@ abstract class BaseStorage implements Storage
         }
         return self::$instances[$cls];
     }
-
 
     /**
      * Add message object to the store
@@ -71,9 +63,19 @@ abstract class BaseStorage implements Storage
 
     /**
      * Create response
+     *
      */
     public function createResponse()
     {
 
+    }
+
+    /**
+     * For testing
+     *
+     */
+    public static function removeStores()
+    {
+        self::$instances = [];
     }
 }

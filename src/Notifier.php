@@ -6,25 +6,14 @@ use Exception;
 
 class Notifier
 {
+
     /**
-     * UI methods for interacting with storage
+     * The active message.
      *
+     * @var Message
      */
+    protected $message;
 
-    public function session()
-    {
-        $this->getAllMessages(SessionStorage::getInstance());
-    }
-
-    public function json()
-    {
-       return $this->getAllMessages(JsonStorage::getInstance());
-    }
-
-    public function html()
-    {
-       return $this->getAllMessages(HtmlStorage::getInstance());
-    }
 
     /**
      * Message an overlay modal.
@@ -85,13 +74,6 @@ class Notifier
     }
 
 
-
-    /**
-     * The active message.
-     *
-     * @var Message
-     */
-    protected $message;
 
     /**
      * Set the message level info.
@@ -179,6 +161,26 @@ class Notifier
     protected function delActiveMessage()
     {
         $this->message = false;
+    }
+
+    /**
+     * UI methods for interacting with storage
+     *
+     */
+
+    public function session()
+    {
+        $this->getAllMessages(SessionStorage::getInstance());
+    }
+
+    public function json()
+    {
+        return $this->getAllMessages(JsonStorage::getInstance());
+    }
+
+    public function html()
+    {
+        return $this->getAllMessages(HtmlStorage::getInstance());
     }
 
 }
