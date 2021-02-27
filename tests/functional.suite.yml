@@ -1,0 +1,7 @@
+actor: FunctionalTester
+modules:
+  enabled:
+    - \Helper\Functional
+    - Asserts
+    - Laravel:
+        cleanup: false
