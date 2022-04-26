@@ -5,8 +5,8 @@
     "keywords": ["laravel, notice"],
 
     "require": {
-        "php": "^7.3|^8.0",
-        "laravel/framework": "^7.0|^8.0"
+        "php": "^7.3|^8.0|^9.0",
+        "laravel/framework": "^7.0|^8.0|^9.0"
     },
     "require-dev": {
         "codeception/codeception": "~4.1.0",
